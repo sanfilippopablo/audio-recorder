@@ -1,0 +1,37 @@
+.root {
+  width: 100%;
+  padding: 1em;
+  position: absolute;
+  bottom: 0;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.recordingInfo {
+  // flex: 1;
+  margin-right: 1em;
+  width: calc(100% - 80px);
+}
+
+.card {
+  padding: 0.5em 1em;
+}
+
+.infoWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.infoWrapper div {
+  margin-right: 1em;
+}
+
+.recordingIcon {
+  color: red;
+}
+
+.time {
+  color: #777;
+}

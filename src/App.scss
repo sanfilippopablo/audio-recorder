@@ -1,0 +1,21 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.recordButton {
+  position: absolute;
+  bottom: 1em;
+  right: 1em;
+}
