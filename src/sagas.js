@@ -66,7 +66,7 @@ function * record () {
         // The record stoped. Time to save the recording.
         // Did you hear? SAVE!!!!
         let blob = new Blob(chunks, {type: mediaRecorder.mimeType})
-        let title = `recording-${time}`
+        let title = time.toString()
 
         // Save
         const recording = yield call(RecordingsManager.saveRecording, {title, duration: 24}, blob)
@@ -87,9 +87,36 @@ function * record () {
   yield cancel(chunksGetter)
 }
 
+function * play () {
+  let audio
+  let playing = false
+  let playingId = null
+  while (true) {
+    const action = yield take('*')
+    switch (action.type) {
+      case duck.PLAY:
+        if (playing) {
+          audio.pause()
+        }
+        audio = new Audio()
+        const blob = yield call(RecordingsManager.getAudioForRecording, action.id)
+        audio.src = window.URL.createObjectURL(blob)
+        audio.play()
+        playing = true
+        break
+      case duck.PAUSE:
+        if (playing) {
+          audio.pause()
+          playing = false
+        }
+    }
+  }
+}
+
 export default function * () {
   yield [
     bootstrapRecordings(),
-    takeEvery(duck.START_RECORDING, record)
+    takeEvery(duck.START_RECORDING, record),
+    play()
   ]
 }

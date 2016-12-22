@@ -4,10 +4,15 @@ export const UPDATE_RECORDING_TIME = 'recorder/UPDATE_RECORDING_TIME'
 export const GET_RECORDINGS = 'recorder/GET_RECORDINGS'
 export const UPDATE_RECORDINGS_LIST = 'recorder/UPDATE_RECORDINGS_LIST'
 export const NEW_RECORDING = 'recorder/NEW_RECORDING'
+export const DELETE_RECORDING = 'recorder/DELETE_RECORDING'
+export const PLAY = 'recorder/PLAY'
+export const PAUSE = 'recorder/PAUSE'
 
 export const actionCreators = {
   startRecording: () => ({type: START_RECORDING}),
-  stopRecording: () => ({type: STOP_RECORDING})
+  stopRecording: () => ({type: STOP_RECORDING}),
+  play: (id) => ({type: PLAY, id}),
+  pause: () => ({type: PAUSE})
 }
 
 const initialState = {
@@ -15,6 +20,10 @@ const initialState = {
   recorder: {
     recording: false,
     time: 0
+  },
+  player: {
+    id: null,
+    playing: false
   }
 }
 export default function reducer (state = initialState, action) {

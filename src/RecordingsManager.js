@@ -1,6 +1,6 @@
 import localForage from 'localforage'
 
-let audios = localForage.createInstance({name: audios})
+let audios = localForage.createInstance({name: 'audios'})
 
 export function getAll () {
   return localForage.getItem('recordings').then((recordings) => {
@@ -20,9 +20,9 @@ export function getAudioForRecording (id) {
 
 export function saveRecording (recording, audio) {
   return getAll().then(recordings => {
-    console.log(recordings)
     // Get ID
-    const id = recordings.map(r => r.id).reduce(Math.max, 0) + 1
+    const id = recordings.map(r => r.id).reduce((a, b) => Math.max(a, b), 0) + 1
+    console.log(id)
     const rec = {
       ...recording,
       id
@@ -38,6 +38,15 @@ export function saveRecording (recording, audio) {
       })
     })
   })
+}
+
+export function deleteRecording (id) {
+  return Promise.all([
+    audios.removeItem(id),
+    localForage.getItem('recordings', (recordings) => {
+      return localForage.setItem('recordings', recordings.filter((r) => r.id !== id))
+    })
+  ]).then(() => {return})
 }
 
 export default {

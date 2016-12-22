@@ -11,18 +11,20 @@ const mapStateToProps = (state) => ({
   recordings: state.recordings
 })
 
+const mapDispatchToProps = (dispatch) => bindActionCreators(actionCreators, dispatch)
+
 class RecordingsList extends React.Component {
   render () {
     const { recordings } = this.props
-    console.log(recordings)
     return (
-      <List className={styles.list}>
+      <List ripple={false}>
         {recordings.map((r) => (
           <ListItem
-            caption={r.title}
+            theme={{itemContentRoot: styles.itemContentRoot}}
+            caption={<span style={{textOverflow: 'ellipsis'}}>{r.title}</span>}
             legend={readableDuration(r.duration)}
             key={r.id}
-            leftIcon={<IconButton icon='play_arrow' />}
+            leftIcon={<IconButton icon='play_arrow' onClick={() => this.props.play(r.id)} />}
             rightIcon={<IconButton icon='clear' />}
           />
         ))}
@@ -32,5 +34,6 @@ class RecordingsList extends React.Component {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(RecordingsList)
