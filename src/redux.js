@@ -12,7 +12,8 @@ export const actionCreators = {
   startRecording: () => ({type: START_RECORDING}),
   stopRecording: () => ({type: STOP_RECORDING}),
   play: (id) => ({type: PLAY, id}),
-  pause: () => ({type: PAUSE})
+  pause: () => ({type: PAUSE}),
+  deleteRecording: (id) => ({type: DELETE_RECORDING, id})
 }
 
 const initialState = {
@@ -62,6 +63,11 @@ export default function reducer (state = initialState, action) {
       return {
         ...state,
         recordings: action.recordings
+      }
+    case DELETE_RECORDING:
+      return {
+        ...state,
+        recordings: state.recordings.filter((r) => r.id !== action.id)
       }
   }
   return state

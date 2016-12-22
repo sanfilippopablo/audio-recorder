@@ -1,4 +1,4 @@
-import { call, put, fork, take, cancel, cancelled } from 'redux-saga/effects'
+import { call, put, fork, take, cancel, cancelled, select } from 'redux-saga/effects'
 import { delay, takeEvery, takeLatest, eventChannel, END } from 'redux-saga'
 import * as duck from './redux'
 import download from 'downloadjs'
@@ -67,9 +67,10 @@ function * record () {
         // Did you hear? SAVE!!!!
         let blob = new Blob(chunks, {type: mediaRecorder.mimeType})
         let title = time.toString()
+        let duration = yield select((state) => state.recorder.time)
 
         // Save
-        const recording = yield call(RecordingsManager.saveRecording, {title, duration: 24}, blob)
+        const recording = yield call(RecordingsManager.saveRecording, {title, duration}, blob)
 
         // Add to current state
         yield put({
@@ -113,10 +114,17 @@ function * play () {
   }
 }
 
+function * deleteRecording (action) {
+  console.log(action)
+  const { id } = action
+  yield call(RecordingsManager.deleteRecording, id)
+}
+
 export default function * () {
   yield [
     bootstrapRecordings(),
     takeEvery(duck.START_RECORDING, record),
-    play()
+    play(),
+    takeEvery(duck.DELETE_RECORDING, deleteRecording)
   ]
 }

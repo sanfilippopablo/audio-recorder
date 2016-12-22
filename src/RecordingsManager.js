@@ -43,7 +43,7 @@ export function saveRecording (recording, audio) {
 export function deleteRecording (id) {
   return Promise.all([
     audios.removeItem(id),
-    localForage.getItem('recordings', (recordings) => {
+    localForage.getItem('recordings').then((recordings) => {
       return localForage.setItem('recordings', recordings.filter((r) => r.id !== id))
     })
   ]).then(() => {return})
@@ -52,5 +52,6 @@ export function deleteRecording (id) {
 export default {
   getAll,
   getAudioForRecording,
-  saveRecording
+  saveRecording,
+  deleteRecording
 }

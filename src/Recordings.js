@@ -20,12 +20,13 @@ class RecordingsList extends React.Component {
       <List ripple={false}>
         {recordings.map((r) => (
           <ListItem
+            ripple={false}
             theme={{itemContentRoot: styles.itemContentRoot}}
-            caption={<span style={{textOverflow: 'ellipsis'}}>{r.title}</span>}
+            caption={r.title}
             legend={readableDuration(r.duration)}
             key={r.id}
             leftIcon={<IconButton icon='play_arrow' onClick={() => this.props.play(r.id)} />}
-            rightIcon={<IconButton icon='clear' />}
+            rightIcon={<IconButton icon='clear' onClick={() => this.props.deleteRecording(r.id)} />}
           />
         ))}
       </List>
