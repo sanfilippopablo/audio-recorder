@@ -86,6 +86,9 @@ function * record () {
   mediaRecorder.stop()
   yield cancel(timeUpdater)
   yield cancel(chunksGetter)
+  stream.getTracks().forEach((streamTrack) => {
+    streamTrack.stop()
+  })
 }
 
 function * play () {
