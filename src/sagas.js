@@ -86,12 +86,16 @@ function * record () {
   mediaRecorder.stop()
   yield cancel(timeUpdater)
   yield cancel(chunksGetter)
+
+  // Release the stream. If we don't do this, the browser will still
+  // keep sending the data and the recording icon will still show
+  // in the tab even after the recording stopped.
   stream.getTracks().forEach((streamTrack) => {
     streamTrack.stop()
   })
 }
 
-function * play () {
+function * playerSaga () {
   let audio
   let playing = false
   let playingId = null
@@ -127,7 +131,7 @@ export default function * () {
   yield [
     bootstrapRecordings(),
     takeEvery(duck.START_RECORDING, record),
-    play(),
+    playerSaga(),
     takeEvery(duck.DELETE_RECORDING, deleteRecording)
   ]
 }
