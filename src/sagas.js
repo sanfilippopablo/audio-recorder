@@ -1,7 +1,6 @@
 import { call, put, fork, take, cancel, cancelled, select } from 'redux-saga/effects'
-import { delay, takeEvery, takeLatest, eventChannel, END } from 'redux-saga'
+import { delay, takeEvery, eventChannel, END } from 'redux-saga'
 import * as duck from './redux'
-import download from 'downloadjs'
 import RecordingsManager from './RecordingsManager'
 
 navigator.getMedia = ( navigator.getUserMedia ||
@@ -48,7 +47,7 @@ function * record () {
 
   // Get stream and create a MediaRecorder
   const stream = yield call(getMedia, {audio: true})
-  let mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/webm; codec=opus'})
+  let mediaRecorder = new MediaRecorder(stream, {mimeType: 'audio/webm; codec=opus'}) // eslint-disable-line no-undef
 
   // Spin up the saga that will record the chunks
   // and eventually save them.
@@ -98,7 +97,6 @@ function * record () {
 function * playerSaga () {
   let audio
   let playing = false
-  let playingId = null
   while (true) {
     const action = yield take('*')
     switch (action.type) {
@@ -117,6 +115,8 @@ function * playerSaga () {
           audio.pause()
           playing = false
         }
+        break
+      default:
     }
   }
 }

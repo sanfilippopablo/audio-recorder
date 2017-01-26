@@ -69,6 +69,7 @@ export default function reducer (state = initialState, action) {
         ...state,
         recordings: state.recordings.filter((r) => r.id !== action.id)
       }
+    default:
   }
   return state
 }

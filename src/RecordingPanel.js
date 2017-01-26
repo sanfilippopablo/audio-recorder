@@ -6,7 +6,6 @@ import { actionCreators } from './redux'
 import { readableDuration } from './utils'
 import { Button } from 'react-toolbox/lib/button'
 import { Card } from 'react-toolbox/lib/card'
-import FontIcon from 'react-toolbox/lib/font_icon'
 import RecordingIcon from './RecordingIcon'
 import styles from './RecordingPanel.scss'
 

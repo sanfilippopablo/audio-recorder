@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Button } from 'react-toolbox/lib/button'
 import AppBar from 'react-toolbox/lib/app_bar'
 import RecordingsList from './Recordings'
 import RecordingPanel from './RecordingPanel'
 import styles from './App.scss'
+
+console.log(styles)
 
 // Import react-toolbox resets
 import 'react-toolbox/lib/commons.scss'
