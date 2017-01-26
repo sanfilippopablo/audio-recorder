@@ -2,6 +2,7 @@
   "name": "caudio-recorder",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://sanfilippopablo.github.io/audio-recorder/",
   "devDependencies": {
     "autoprefixer": "6.5.1",
     "babel-core": "6.17.0",
@@ -48,6 +49,7 @@
   },
   "dependencies": {
     "downloadjs": "^1.4.7",
+    "gh-pages": "^0.12.0",
     "localforage": "^1.4.3",
     "node-sass": "^4.3.0",
     "react": "^15.4.2",
@@ -57,12 +59,15 @@
     "react-toolbox": "1",
     "redux": "^3.6.0",
     "redux-saga": "^0.14.3",
-    "sass-loader": "^4.1.1"
+    "sass-loader": "^4.1.1",
+    "sw-precache": "^4.3.0"
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "build": "node scripts/build.js && sw-precache --config=sw-precache-config.js",
+    "test": "node scripts/test.js --env=jsdom",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "jest": {
     "collectCoverageFrom": [
